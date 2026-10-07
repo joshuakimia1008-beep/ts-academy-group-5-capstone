@@ -1,48 +1,64 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>planet-Explore the solar system</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
 
-  <body>
-    <header>
-      <nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>planet-Explore the solar system</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="site-header">
+
+    <div class="header-top">
+      <div class="logo">
+        <img src="assets/logo.svg" alt="Planet Logo" class="logo-icon">
+        <h2>planet</h2>
+      </div>
+
+      <button id="theme-btn" class="theme-toggle" aria-label="Toggle dark mode">
+        DARK <img src="assets/moon.svg" alt="Moon icon" class="moon-icon">
+      </button>
+    </div>
+
+    <nav class="header-nav">
+      <form id="search-form" class="search-bar">
+        <div class="input-group">
+          <img src="assets/search.svg" alt="Search" class="search-icon">
+          <input type="text" id="planet-search" placeholder="Search planet name..." required>
+        </div>
+        <button type="submit" class="search-btn">Search</button>
+      </form>
+    </nav>
+
+  </header>
+
+  <main>
+    <!--HERO SECTION-->
+    <section id="planet-image">
 
 
 
-      </nav>
-    </header>
 
-    <main>
-      <!--HERO SECTION-->
-      <section id="planet-image">
+    </section>
+    <hr>
 
+    <section id="planetary_structure">
 
 
 
-      </section>
-<hr>
+    </section>
+  </main>
 
-<section id="planetary_structure">
-
-
-
-</section>
-    </main>
-
-    <!--FOOTER-->
-    <footer>
-      
+  <!--FOOTER-->
+  <footer>
 
 
-    </footer>
 
-<script src="scipt.js"></script>
-  </body>
+  </footer>
+
+  <script src="scipt.js"></script>
+</body>
+
 </html>
-
-
-    
