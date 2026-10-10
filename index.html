@@ -4,17 +4,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>planet-Explore the solar system</title>
+  <title>planet - Explore the solar system</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
   <header class="site-header">
-
     <div class="header-top">
       <div class="logo">
-        <img src="assets/logo.svg" alt="Planet Logo" class="logo-icon">
-        <h2>planet</h2>
+        <img src="assets/logo_black.png" alt="Planet Logo" class="logo-icon">
       </div>
 
       <button id="theme-btn" class="theme-toggle" aria-label="Toggle dark mode">
@@ -31,31 +29,158 @@
         <button type="submit" class="search-btn">Search</button>
       </form>
     </nav>
-
   </header>
 
   <main>
-    <!--HERO SECTION-->
+    <!-- TASK 2: Planet Image Section -->
     <section id="planet-image">
-
-
-
-
+      <div class="planet-image-container">
+        <img id="active-planet-img" src="assets/earth_ picture.png" alt="Planet image" />
+      </div>
     </section>
+
     <hr>
 
+    <!-- TASK 1: Hero/Planet Structure & Information -->
     <section id="planetary_structure">
+      <div class="planet-details-wrapper">
+        <h1 id="planet-name">Earth</h1>
+        <p class="planet-type">Terrestrial</p>
+
+        <p id="planet-description">
+          The only known planet to support life, with liquid water on its surface.
+        </p>
+
+        <div class="planet-info-grid" id="planet-info-container">
+          <div class="info-box">
+            <span class="label">Gravity</span>
+            <span id="planet-gravity" class="value">9.8</span>
+          </div>
+          <div class="info-box">
+            <span class="label">Mass (10 24kg)</span>
+            <span id="planet-mass" class="value">0.00315</span>
+          </div>
+          <div class="info-box">
+            <span class="label">Period</span>
+            <span id="planet-period" class="value">365</span>
+          </div>
+        </div>
+
+        <div class="planet-info-values" id="planet-info-container">
+          <div class="info-box">
+            <img src="assets/Temperature_icon.png" alt="Temperature icon" class="info-icon">
+            <span id="planet-gravity" class="value">288</span>
+          </div>
+          
+          <div class="info-box">
+            <img src="assets/Path.png" alt="path icon" class="info-icon">
+            <span id="planet-gravity" class="value">1</span>
+          </div>
+          
+          <div class="info-box">
+             <img src="assets/Diameter.png" alt="diameter icon" class="info-icon">
+            <span id="planet-gravity" class="value">12756</span>
+          </div>
+          <div class="info-box">
+             <img src="assets/Company_Icon.png" alt="Company icon" class="info-icon">
+            <span id="planet-gravity" class="value">149.6</span>
+          </div>
+        </div>
 
 
+        <div class="planet-tabs">
+          <button class="tab-btn" data-tab="overview">01 Overview</button>
+          <button class="tab-btn" data-tab="structure">02 Internal Structure</button>
+          <button class="tab-btn" data-tab="geology">03 Surface Geology</button>
+        </div>
+      </div>
+    </section>
 
+    <hr>
+
+    <!-- PLANETARY FACTS AT A GLANCE (From Figma) -->
+    <section id="planet-facts-section">
+      <h2>Planetary Facts at a Glance</h2>
+      <p>
+        Below is a comparative table of major planets in our solar system. The data highlights key physical properties
+        used by astronomers and researchers worldwide.
+      </p>
+      <p class="facts-source">
+        Data about the planets of our solar system (Planetary facts taken from NASA)
+      </p>
+
+      <table class="planet-facts-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Mass (10 24kg)</th>
+            <th>Diameter (km)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="4">Terrestrial Planets</td>
+            <td>Mercury</td>
+            <td>0.330</td>
+            <td>4,878</td>
+          </tr>
+          <tr>
+            <td>Venus</td>
+            <td>0.330</td>
+            <td>4,878</td>
+          </tr>
+          <tr>
+            <td>Earth</td>
+            <td>0.330</td>
+            <td>4,878</td>
+          </tr>
+          <tr>
+            <td>Mars</td>
+            <td>0.330</td>
+            <td>4,878</td>
+          </tr>
+
+          <tr>
+            <td rowspan="4">Jovian Planets</td>
+            <td>Jupiter</td>
+            <td>0.330</td>
+            <td>4,878</td>
+          </tr>
+          <tr>
+            <td>Saturn</td>
+            <td>0.330</td>
+            <td>4,878</td>
+          </tr>
+          <tr>
+            <td>Uranus</td>
+            <td>0.330</td>
+            <td>4,878</td>
+          </tr>
+          <tr>
+            <td>Neptune</td>
+            <td>0.330</td>
+            <td>4,878</td>
+          </tr>
+
+          <tr>
+            <td>Dwarf Planets</td>
+            <td>Pluto</td>
+            <td>0.330</td>
+            <td>4,878</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </main>
 
-  <!--FOOTER-->
   <footer>
-
-
-
+    <div class="footer-content">
+      <p>About</p>
+      <p>first name of group members</p>
+      <p>Built by GroupName. All rights reserved TSAcademy</p>
+      <p>©2026 Design by Amaka N</p>
+    </div>
   </footer>
 
   <script src="scipt.js"></script>
