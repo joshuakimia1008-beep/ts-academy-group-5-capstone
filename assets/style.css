@@ -511,14 +511,14 @@ body {
 
 main {
   display: grid;
-  grid-template-columns: 140px 1fr; 
+  grid-template-columns: 140px 1fr;
   column-gap: 32px;
   align-items: start;
 }
 
 main > hr,
 #planet-facts-section {
-  grid-column: 1 / -1; 
+  grid-column: 1 / -1;
 }
 
 #planet-image + hr {
@@ -534,14 +534,14 @@ main > hr,
   width: 100%;
   height: 100%;
   max-width: none;
-  border-radius: 50%; 
+  border-radius: 50%;
   object-fit: cover;
   display: block;
 }
 
 .planet-info-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   padding: 16px 20px;
   background-color: rgba(255, 255, 255, 0.04);
@@ -591,4 +591,212 @@ main > hr,
   width: 20px;
   height: 20px;
   object-fit: contain;
+}
+
+/* =========================================================
+   FIXES: Earth card + Planetary facts table
+   ========================================================= */
+
+/* ===== Earth card ===== */
+main hr {
+  display: none;
+}
+
+.planet-card {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  column-gap: 32px;
+  align-items: start;
+  background: var(--colors-neutral-800, #1e2a47);
+  border: none;
+  border-radius: var(--space-200);
+  padding: var(--space-600);
+}
+
+.planet-type {
+  color: #2f80ff;
+}
+
+#planet-description {
+  font-family: "Space Mono", ui-monospace, "Courier New", monospace;
+  color: #4a6fb5;
+  font-size: 0.85rem;
+}
+
+.planet-info-grid {
+  background-color: #0b1220;
+}
+
+.info-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--text-main);
+}
+
+/* ===== Facts table ===== */
+.facts-intro {
+  color: #7f93c4;
+}
+
+.facts-source {
+  color: var(--text-main);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.table-responsive {
+  border-radius: 16px;
+  border: 1px solid #dbe3f5;
+  overflow: hidden;
+}
+
+.planet-facts-table {
+  border-collapse: collapse;
+  background: #f4f7ff;
+  color: #0b1220;
+}
+
+.planet-facts-table th,
+.planet-facts-table td {
+  border: 1px solid #c9d4ee;
+}
+
+.planet-facts-table th {
+  background: #141d2f;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  font-weight: 700;
+}
+
+.planet-facts-table .category-cell {
+  background: #9fb0de;
+  color: #0b1220;
+  font-weight: 600;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* =========================================================
+   FIGMA SPECS: desktop frame 1440 wide, 730 content column
+   ========================================================= */
+:root {
+  --space-200: 8px; /* assumed value of Figma token spacing/200 */
+  --space-400: 16px; /* assumed value of Figma token spacing/400 */
+  --space-600: 24px; /* assumed value of Figma token spacing/600 */
+  --colors-neutral-800: #1e2a47;
+}
+
+@media (min-width: 1024px) {
+  /* ---------- Desktop frame ---------- */
+  body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 130px 20px;
+    opacity: 1;
+  }
+
+  .site-header,
+  main,
+  footer {
+    width: 100%;
+    max-width: 730px;
+    margin: 0 auto;
+  }
+
+  main {
+    row-gap: 10px;
+  }
+
+  /* ---------- Logo row ---------- */
+  .header-top {
+    width: 100%;
+    max-width: 730px;
+    height: 52.08px;
+    justify-content: space-between;
+    opacity: 1;
+  }
+
+  /* ---------- Stats section ---------- */
+  .planet-info-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 480px;
+    max-width: 100%;
+    height: 85px;
+    padding: var(--space-200) var(--space-400);
+    border-radius: 10px;
+    gap: 0;
+    margin-bottom: 24px;
+    opacity: 1;
+  }
+
+  .planet-info-grid .label {
+    white-space: nowrap;
+  }
+
+  /* ---------- Table ---------- */
+  .table-responsive {
+    width: 730px;
+    max-width: 100%;
+    height: 623px;
+    margin-top: 37px;
+    border: 2px solid #ffffff;
+    opacity: 1;
+  }
+
+  .planet-facts-table {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (min-width: 1440px) {
+  body {
+    padding: 130px 355px;
+  }
+}
+
+/* ===== Profile section + footer (desktop) ===== */
+@media (min-width: 1024px) {
+  .planet-card {
+    grid-template-columns: 1fr 480px;
+    column-gap: 32px;
+    width: 100%;
+    max-width: 730px;
+    height: 420px;
+    opacity: 1;
+  }
+
+  .planet-image-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  footer {
+    height: 74px;
+    opacity: 1;
+  }
+
+  .footer-content {
+    height: 100%;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+/* ===== Footer typography ===== */
+footer p {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  vertical-align: middle;
 }
