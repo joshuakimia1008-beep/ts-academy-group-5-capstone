@@ -1,159 +1,101 @@
-const planets = [
-  {
-    name: "Mercury",
-    type: "Terrestrial",
-    category: "Terrestrial Planets",
-    description: "The smallest planet, orbiting closest to the Sun.",
-    image: "assets/mercury.png",
-    gravity: "3.7 m/s²",
-    mass: "0.330",
-    period: "88 days",
-    temperature: "167 K",
-    orbit: "0.39 AU",
-    diameter: "4,879 km",
-    distance: "57.9 million km",
-  },
-  {
-    name: "Venus",
-    type: "Terrestrial",
-    category: "Terrestrial Planets",
-    description: "A rocky planet with a very thick, hot atmosphere.",
-    image: "assets/venus.png",
-    gravity: "8.87 m/s²",
-    mass: "4.87",
-    period: "225 days",
-    temperature: "737 K",
-    orbit: "0.72 AU",
-    diameter: "12,104 km",
-    distance: "108.2 million km",
-  },
-  {
-    name: "Earth",
-    type: "Terrestrial",
-    category: "Terrestrial Planets",
-    description:
-      "Our home planet and the only world currently known to support life.",
-    image: "assets/earth_ picture.png",
-    gravity: "9.8 m/s²",
-    mass: "5.97",
-    period: "365.25 days",
-    temperature: "288 K",
-    orbit: "1 AU",
-    diameter: "12,756 km",
-    distance: "149.6 million km",
-  },
-  {
-    name: "Mars",
-    type: "Terrestrial",
-    category: "Terrestrial Planets",
-    description:
-      "The Red Planet, known for its dusty surface and giant volcanoes.",
-    image: "assets/mars.png",
-    gravity: "3.71 m/s²",
-    mass: "0.642",
-    period: "687 days",
-    temperature: "210 K",
-    orbit: "1.52 AU",
-    diameter: "6,792 km",
-    distance: "227.9 million km",
-  },
-  {
-    name: "Jupiter",
-    type: "Gas Giant",
-    category: "Jovian Planets",
-    subCategory: "Gas Giants",
-    description:
-      "The largest planet in our solar system, famous for its Great Red Spot.",
-    image: "assets/jupiter.png",
-    gravity: "24.79 m/s²",
-    mass: "1,898",
-    period: "11.86 years",
-    temperature: "165 K",
-    orbit: "5.2 AU",
-    diameter: "142,984 km",
-    distance: "778.6 million km",
-  },
-  {
-    name: "Saturn",
-    type: "Gas Giant",
-    category: "Jovian Planets",
-    subCategory: "Gas Giants",
-    description: "A gas giant best known for its spectacular rings.",
-    image: "assets/saturn.png",
-    gravity: "10.44 m/s²",
-    mass: "568",
-    period: "29.45 years",
-    temperature: "134 K",
-    orbit: "9.58 AU",
-    diameter: "120,536 km",
-    distance: "1.43 billion km",
-  },
-  {
-    name: "Uranus",
-    type: "Ice Giant",
-    category: "Jovian Planets",
-    subCategory: "Ice Giants",
-    description: "An ice giant that rotates on its side.",
-    image: "assets/uranus.png",
-    gravity: "8.69 m/s²",
-    mass: "86.8",
-    period: "84 years",
-    temperature: "76 K",
-    orbit: "19.2 AU",
-    diameter: "51,118 km",
-    distance: "2.87 billion km",
-  },
-  {
-    name: "Neptune",
-    type: "Ice Giant",
-    category: "Jovian Planets",
-    subCategory: "Ice Giants",
-    description: "A distant blue ice giant with extremely fast winds.",
-    image: "assets/neptune.png",
-    gravity: "11.15 m/s²",
-    mass: "102",
-    period: "164.8 years",
-    temperature: "72 K",
-    orbit: "30.05 AU",
-    diameter: "49,528 km",
-    distance: "4.50 billion km",
-  },
-  {
-    name: "Pluto",
-    type: "Dwarf Planet",
-    category: "Dwarf Planets",
-    description: "A small icy world in the Kuiper Belt beyond Neptune.",
-    image: "assets/pluto.png",
-    gravity: "0.62 m/s²",
-    mass: "0.0130",
-    period: "248 years",
-    temperature: "44 K",
-    orbit: "39.5 AU",
-    diameter: "2,376 km",
-    distance: "5.9 billion km",
-  },
-];
+/* =========================================================
+   API SETTINGS
+   Paste the API address you were given, and your key if it needs one.
+   ========================================================= */
+const API_URL = "https://anurella.github.io/json/planet.json";
+const API_KEY = ""; // leave empty if the API needs no key
+
+const JUPITER_MASS_E24_KG = 1898; // the API gives mass in Jupiter masses
+const AU_MILLION_KM = 149.6;
+
+let planetListPromise = null;
+
+/* Download the planet list once, then reuse it for every search. */
+function loadPlanets() {
+  if (!planetListPromise) {
+    const options = API_KEY ? { headers: { "X-Api-Key": API_KEY } } : {};
+
+    planetListPromise = fetch(API_URL, options)
+      .then((response) => {
+        if (!response.ok) throw new Error(`API error ${response.status}`);
+        return response.json();
+      })
+      .catch((error) => {
+        planetListPromise = null; // allow a retry on the next search
+        throw error;
+      });
+  }
+  return planetListPromise;
+}
+
+/* Find one planet by name. Returns the API object, or null if not found. */
+async function fetchPlanet(name) {
+  const planets = await loadPlanets();
+  const key = name.trim().toLowerCase();
+  return planets.find((p) => p.name.toLowerCase() === key) || null;
+}
+
+/* Turn the API's fields into the display strings the card uses. */
+function normalize(api) {
+  const has = (v) => v !== undefined && v !== null;
+  const fmt = (n, digits = 2) =>
+    Number(n).toLocaleString(undefined, { maximumFractionDigits: digits });
+
+  let period = "N/A";
+  if (has(api.period)) {
+    period =
+      api.period >= 730
+        ? `${fmt(api.period / 365.25, 1)} years`
+        : `${fmt(api.period)} days`;
+  }
+
+  return {
+    name: api.name,
+    type: api.type || "Planet",
+    description: api.description || "No description is available.",
+    image: api.image || "",
+    gravity: has(api.gravity) ? `${api.gravity} m/s²` : "N/A",
+    mass: has(api.mass)
+      ? Number((api.mass * JUPITER_MASS_E24_KG).toPrecision(3)).toLocaleString()
+      : "N/A",
+    period,
+    temperature: has(api.temperature) ? `${fmt(api.temperature, 0)} K` : "N/A",
+    orbit: has(api.distanceFromSun)
+      ? `${Number((api.distanceFromSun / AU_MILLION_KM).toPrecision(3))} AU`
+      : "N/A",
+    diameter: has(api.diameter) ? `${fmt(api.diameter, 0)} km` : "N/A",
+    distance: has(api.distanceFromSun)
+      ? `${fmt(api.distanceFromSun, 1)} million km`
+      : "N/A",
+  };
+}
 
 function renderActivePlanet(planet) {
   if (!planet) return;
 
   document.getElementById("planet-name").textContent = planet.name;
   document.querySelector(".planet-type").textContent = planet.type;
-  document.getElementById("planet-description").textContent =
-    planet.description;
+  document.getElementById("planet-description").textContent = planet.description;
 
   const image = document.getElementById("active-planet-img");
 
   image.onerror = () => {
     image.onerror = null;
     image.removeAttribute("src");
-    image.alt = `${planet.name} image unavailable. Check the image file path.`;
+    image.alt = `${planet.name} image unavailable.`;
     image.classList.add("image-unavailable");
   };
 
   image.classList.remove("image-unavailable");
   image.alt = planet.name;
-  image.src = planet.image;
+
+  if (planet.image) {
+    image.src = planet.image;
+  } else {
+    image.removeAttribute("src");
+    image.alt = `${planet.name} (no picture available)`;
+    image.classList.add("image-unavailable");
+  }
 
   document.getElementById("planet-gravity").textContent = planet.gravity;
   document.getElementById("planet-mass").textContent = planet.mass;
@@ -164,73 +106,8 @@ function renderActivePlanet(planet) {
   document.getElementById("planet-distance").textContent = planet.distance;
 }
 
-function renderPlanetTable(planetsArray) {
-  const tbody = document.querySelector(".planet-facts-table tbody");
-
-  if (!tbody) return;
-
-  tbody.replaceChildren();
-
-  const categories = ["Terrestrial Planets", "Jovian Planets", "Dwarf Planets"];
-
-  categories.forEach((category) => {
-    const group = planetsArray.filter((planet) => planet.category === category);
-
-    group.forEach((planet, index) => {
-      const row = document.createElement("tr");
-
-      if (index === 0 && category !== "Jovian Planets") {
-        const categoryCell = document.createElement("td");
-        categoryCell.className = "category-cell";
-        categoryCell.colSpan = 2;
-        categoryCell.rowSpan = group.length;
-        categoryCell.textContent = category;
-        row.appendChild(categoryCell);
-      }
-
-      if (category === "Jovian Planets") {
-        if (index === 0) {
-          const categoryCell = document.createElement("td");
-          categoryCell.className = "category-cell";
-          categoryCell.rowSpan = group.length;
-          categoryCell.textContent = category;
-          row.appendChild(categoryCell);
-        }
-
-        const previous = group[index - 1];
-
-        if (!previous || previous.subCategory !== planet.subCategory) {
-          const subGroup = group.filter(
-            (item) => item.subCategory === planet.subCategory,
-          );
-
-          const subCategoryCell = document.createElement("td");
-          subCategoryCell.className = "category-cell";
-          subCategoryCell.rowSpan = subGroup.length;
-          subCategoryCell.textContent = planet.subCategory;
-          row.appendChild(subCategoryCell);
-        }
-      }
-
-      const nameCell = document.createElement("td");
-      nameCell.textContent = planet.name;
-
-      const massCell = document.createElement("td");
-      massCell.textContent = planet.mass;
-
-      const diameterCell = document.createElement("td");
-      diameterCell.textContent = planet.diameter.replace(" km", "");
-
-      row.append(nameCell, massCell, diameterCell);
-      tbody.appendChild(row);
-    });
-  });
-}
-
 /* =========================================================
-   THEME (light / dark)
-   - Saved choice wins; otherwise follow the device setting.
-   - The theme is stored on <html data-theme="...">.
+   THEME (light / dark)  - unchanged
    ========================================================= */
 const THEME_KEY = "planet-theme";
 const THEME_COLORS = { light: "#f6f8ff", dark: "#141d2f" };
@@ -247,9 +124,7 @@ function getSavedTheme() {
 function saveTheme(theme) {
   try {
     localStorage.setItem(THEME_KEY, theme);
-  } catch (error) {
-    /* storage blocked (private mode) - theme still works for this visit */
-  }
+  } catch (error) {}
 }
 
 function getSystemTheme() {
@@ -275,7 +150,6 @@ function applyTheme(theme) {
 function initializeTheme() {
   const themeButton = document.getElementById("theme-btn");
 
-  // Sync the button with whatever theme the <head> script already applied.
   applyTheme(
     document.documentElement.getAttribute("data-theme") ||
       getSavedTheme() ||
@@ -291,7 +165,6 @@ function initializeTheme() {
     });
   }
 
-  // Follow device changes, but only if the user hasn't picked a theme.
   if (window.matchMedia) {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const onSystemChange = (event) => {
@@ -301,7 +174,7 @@ function initializeTheme() {
     if (media.addEventListener) {
       media.addEventListener("change", onSystemChange);
     } else if (media.addListener) {
-      media.addListener(onSystemChange); // older Safari
+      media.addListener(onSystemChange);
     }
   }
 }
@@ -315,66 +188,78 @@ function initializePlanetExplorer() {
   const searchStatus = document.getElementById("search-status");
   const searchResults = document.getElementById("search-results");
   const noResults = document.getElementById("no-results");
+  const noResultsTitle = noResults.querySelector("h2");
+  const noResultsText = noResults.querySelector("p");
   const planetCard = document.getElementById("planet-card");
   const factsSection = document.getElementById("planet-facts-section");
+  const searchBtn = searchForm.querySelector(".search-btn");
+
+  let requestId = 0; // ignore out-of-date responses
 
   initializeTheme();
 
-  // Load Earth and the complete planet table on startup.
-  renderActivePlanet(planets.find((planet) => planet.name === "Earth"));
-  renderPlanetTable(planets);
-
-  function hideNoResults() {
+  function showPlanet() {
     searchStatus.textContent = "";
     searchResults.hidden = true;
     noResults.hidden = true;
-
-    if (planetCard) planetCard.hidden = false;
-    if (factsSection) factsSection.hidden = false;
+    planetCard.hidden = false;
+    factsSection.hidden = false;
   }
 
-  function showNoResults() {
-    searchStatus.textContent = "No results";
+  function showMessage(status, title, text) {
+    searchStatus.textContent = status;
+    noResultsTitle.textContent = title;
+    noResultsText.textContent = text;
     searchResults.hidden = false;
     noResults.hidden = false;
-
-    if (planetCard) planetCard.hidden = true;
-    if (factsSection) factsSection.hidden = true;
+    planetCard.hidden = true;
+    factsSection.hidden = true;
   }
 
-  function searchPlanet() {
-    const query = searchInput.value.trim().toLowerCase();
+  async function searchPlanet(query) {
+    const id = ++requestId;
+    searchBtn.disabled = true;
+    searchStatus.textContent = "Loading...";
 
-    if (!query) {
-      hideNoResults();
-      return;
-    }
+    try {
+      const apiPlanet = await fetchPlanet(query);
+      if (id !== requestId) return;
 
-    const selectedPlanet = planets.find(
-      (planet) => planet.name.toLowerCase() === query,
-    );
-
-    if (selectedPlanet) {
-      hideNoResults();
-      renderActivePlanet(selectedPlanet);
-    } else {
-      showNoResults();
+      if (apiPlanet) {
+        showPlanet();
+        renderActivePlanet(normalize(apiPlanet));
+      } else {
+        showMessage(
+          "No results",
+          "No results found!",
+          "We couldn't find any planet matching your search. Please double-check the name and try again.",
+        );
+      }
+    } catch (error) {
+      if (id !== requestId) return;
+      showMessage(
+        "Error",
+        "Something went wrong",
+        "We couldn't reach the planet service. Check your internet connection and API key, then try again.",
+      );
+      console.error(error);
+    } finally {
+      if (id === requestId) searchBtn.disabled = false;
     }
   }
 
-  // Search when the form is submitted.
+  // Load Earth from the API on startup.
+  searchPlanet("Earth");
+
   searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    searchPlanet();
+    const query = searchInput.value.trim();
+    if (query) searchPlanet(query);
   });
 
-  // Update the results while the user types.
+  // Clearing the box returns to Earth (cached after the first load).
   searchInput.addEventListener("input", () => {
-    if (searchInput.value.trim() === "") {
-      hideNoResults();
-    } else {
-      searchPlanet();
-    }
+    if (searchInput.value.trim() === "") searchPlanet("Earth");
   });
 }
 
