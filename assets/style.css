@@ -1,6 +1,7 @@
 /* CSS Variables / Theme Colors */
 :root {
-  --bg-dark: #070a13;
+  --bg-dark: #141D2F;
+  --bg-light: #F6F8FF;
   --card-bg: #0f172a;
   --card-border: #1e293b;
   --text-main: #ffffff;
@@ -799,4 +800,176 @@ footer p {
   line-height: 150%;
   letter-spacing: -0.02em;
   vertical-align: middle;
+}
+
+/* =========================================================
+   SEARCH BAR + EMPTY RESULTS (Onyinye)
+   ========================================================= */
+
+/* Makes the JS "hidden" toggles work even on elements with display set */
+[hidden] {
+  display: none !important;
+}
+
+/* ----- Search bar (light = default) ----- */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 69px;                  /* Figma: fixed 69px */
+  padding: 0 11px 0 22px;        /* measured from the design */
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(30, 60, 120, 0.08);
+}
+
+/* the old CSS made this the box; now .search-bar is the box */
+.input-group {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.search-icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 14px;
+  flex-shrink: 0;
+  opacity: 1;
+}
+
+#planet-search {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #1d2b4f;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 1rem;
+}
+
+#planet-search::placeholder {
+  color: #8a9bc2;
+}
+
+/* "No results" inside the bar (empty span stays hidden) */
+.search-status {
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ef4444;
+  white-space: nowrap;
+}
+
+.search-status:empty {
+  display: none;
+}
+
+.search-btn {
+  height: 48px;
+  padding: 0 28px;
+  background: #0a84ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  background: #0a6fd6;
+}
+
+.search-bar:focus-within {
+  box-shadow: 0 2px 10px rgba(30, 60, 120, 0.08),
+              0 0 0 2px rgba(10, 132, 255, 0.4);
+}
+
+/* ----- Empty results (light = default) ----- */
+.search-results {
+  grid-column: 1 / -1;           /* span the full width of the <main> grid */
+  width: 100%;
+}
+
+.no-results {
+  width: 100%;
+  padding: 64px 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(30, 60, 120, 0.1);
+  text-align: center;
+}
+
+.no-results h2 {
+  margin: 0 0 16px;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #1d2b4f;
+}
+
+.no-results p {
+  max-width: 560px;
+  margin: 0 auto;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #6b7ba3;
+}
+
+/* ----- Dark theme ----- */
+body.dark-mode .search-bar,
+body.dark-mode .no-results {
+  background: #1e2a47;           /* colors/neutral/800 */
+  box-shadow: none;
+}
+
+body.dark-mode .search-bar:focus-within {
+  box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.4);
+}
+
+body.dark-mode #planet-search {
+  color: #ffffff;
+}
+
+body.dark-mode .no-results h2 {
+  color: #ffffff;
+}
+
+body.dark-mode .no-results p {
+  color: #94a3b8;
+}
+
+/* ----- Mobile ----- */
+@media (max-width: 480px) {
+  .search-bar {
+    gap: 8px;
+    padding: 0 8px 0 14px;
+  }
+  .search-btn {
+    padding: 0 16px;
+  }
+  .no-results {
+    padding: 40px 16px;
+  }
+  .no-results h2 {
+    font-size: 1.25rem;
+  }
+}
+
+
+/* ===== Light theme page background ===== */
+/* The page uses the requested light background unless dark mode is active. */
+body:not(.dark-mode) {
+  background-color: var(--bg-light);
 }
