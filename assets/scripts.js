@@ -135,6 +135,8 @@ const planets = [
 ];
 
 function renderActivePlanet(planet) {
+  if (!planet) return;
+
   document.getElementById("planet-name").textContent = planet.name;
   document.querySelector(".planet-type").textContent = planet.type;
   document.getElementById("planet-description").textContent =
@@ -142,7 +144,6 @@ function renderActivePlanet(planet) {
 
   const image = document.getElementById("active-planet-img");
 
-  // Clear the previous image before loading the selected planet.
   image.onerror = () => {
     image.onerror = null;
     image.removeAttribute("src");
@@ -165,12 +166,21 @@ function renderActivePlanet(planet) {
 
 function renderPlanetTable(planetsArray) {
   const tbody = document.querySelector(".planet-facts-table tbody");
+
+  if (!tbody) return;
+
   tbody.replaceChildren();
 
-  const categories = ["Terrestrial Planets", "Jovian Planets", "Dwarf Planets"];
+  const categories = [
+    "Terrestrial Planets",
+    "Jovian Planets",
+    "Dwarf Planets",
+  ];
 
   categories.forEach((category) => {
-    const group = planetsArray.filter((planet) => planet.category === category);
+    const group = planetsArray.filter(
+      (planet) => planet.category === category
+    );
 
     group.forEach((planet, index) => {
       const row = document.createElement("tr");
@@ -194,9 +204,10 @@ function renderPlanetTable(planetsArray) {
         }
 
         const previous = group[index - 1];
+
         if (!previous || previous.subCategory !== planet.subCategory) {
           const subGroup = group.filter(
-            (item) => item.subCategory === planet.subCategory,
+            (item) => item.subCategory === planet.subCategory
           );
 
           const subCategoryCell = document.createElement("td");
@@ -225,37 +236,92 @@ function renderPlanetTable(planetsArray) {
 function initializePlanetExplorer() {
   const searchForm = document.getElementById("search-form");
   const searchInput = document.getElementById("planet-search");
+  const searchStatus = document.getElementById("search-status");
+  const searchResults = document.getElementById("search-results");
+  const noResults = document.getElementById("no-results");
+  const planetCard = document.getElementById("planet-card");
+  const factsSection = document.getElementById("planet-facts-section");
   const themeButton = document.getElementById("theme-btn");
+  const themeLabel = document.getElementById("theme-label");
 
-  // Load Earth and generate the table on startup.
+  // Load Earth and the complete planet table on startup.
   renderActivePlanet(planets.find((planet) => planet.name === "Earth"));
   renderPlanetTable(planets);
 
-  // Search by planet name, ignoring letter case and extra spaces.
-  searchForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+  function hideNoResults() {
+    searchStatus.textContent = "";
+    searchResults.hidden = true;
+    noResults.hidden = true;
 
+    if (planetCard) planetCard.hidden = false;
+    if (factsSection) factsSection.hidden = false;
+  }
+
+  function showNoResults() {
+    searchStatus.textContent = "No results";
+    searchResults.hidden = false;
+    noResults.hidden = false;
+
+    if (planetCard) planetCard.hidden = true;
+    if (factsSection) factsSection.hidden = true;
+  }
+
+  function searchPlanet() {
     const query = searchInput.value.trim().toLowerCase();
+
+    if (!query) {
+      hideNoResults();
+      return;
+    }
+
     const selectedPlanet = planets.find(
-      (planet) => planet.name.toLowerCase() === query,
+      (planet) => planet.name.toLowerCase() === query
     );
 
     if (selectedPlanet) {
+      hideNoResults();
       renderActivePlanet(selectedPlanet);
     } else {
-      alert(
-        "Planet not found. Try Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune or Pluto.",
-      );
+      showNoResults();
+    }
+  }
+
+  // Search when the form is submitted.
+  searchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    searchPlanet();
+  });
+
+  // Update the results while the user types.
+  searchInput.addEventListener("input", () => {
+    if (searchInput.value.trim() === "") {
+      hideNoResults();
+    } else {
+      searchPlanet();
     }
   });
 
-  // Toggle dark mode.
-  themeButton.addEventListener("click", () => {
-    const isDark = document.body.classList.toggle("dark-mode");
+  // Toggle dark and light themes.
+  if (themeButton) {
+    themeButton.addEventListener("click", () => {
+      const isDark = document.body.classList.toggle("dark-mode");
 
-    themeButton.firstChild.textContent = isDark ? "LIGHT " : "DARK ";
-    themeButton.setAttribute("aria-pressed", String(isDark));
-  });
+      if (themeLabel) {
+        themeLabel.textContent = isDark ? "LIGHT" : "DARK";
+      } else {
+        // Fallback if the HTML still uses plain text inside the button.
+        const textNode = Array.from(themeButton.childNodes).find(
+          (node) => node.nodeType === Node.TEXT_NODE
+        );
+
+        if (textNode) {
+          textNode.textContent = isDark ? "LIGHT " : "DARK ";
+        }
+      }
+
+      themeButton.setAttribute("aria-pressed", String(isDark));
+    });
+  }
 }
 
 if (document.readyState === "loading") {
@@ -263,4 +329,3 @@ if (document.readyState === "loading") {
 } else {
   initializePlanetExplorer();
 }
-
