@@ -1,5 +1,7 @@
 # ts-academy-group-5-capstone
 TS Academy Frontend Development Capstone Project — Group 5
+# ts-academy-group-5-capstone
+TS Academy Frontend Development Capstone Project — Group 5
 <div align="center">
 
 # 🪐 Planet — Explore the Solar System
@@ -17,6 +19,10 @@ A responsive, searchable guide to the planets of our solar system, with a light 
 **Planet** lets you look up any planet in our solar system and see its key facts at a glance. Type a planet name into the search bar and the page updates with that planet's picture, description and statistics. Below that, a comparison table shows the mass and diameter of every planet.
 
 The project was designed and built by the students of **Group 5** during the TS Academy Frontend Development programme. Everyone in the group took part, and each person's work is listed in the [Meet the team](#-meet-the-team) section.
+
+## 🌐 Live site
+
+**Live deployment:** _add the deployment link here once the site is live_
 
 ## ✨ Features
 
@@ -81,13 +87,13 @@ Group 5 built this project together. Here is who did what:
 | **Tolu** (Omeiza Bayode, [@tolu021](https://github.com/tolu021)) | **Assistant project lead.** Built the **semantic HTML structure** ([#2](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/2)) and the **header and navigation** ([#3](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/3)). Also fixed the stylesheet and script paths and cleaned up unused icon files. |
 | **FRANK VISUALS** ([@odesolafranklin-ctrl](https://github.com/odesolafranklin-ctrl)) | **Footer structure and content** ([#7](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/7)). |
 | **kings-blip** ([@kings-blip](https://github.com/kings-blip)) | **Planet image styling and statistics cards** ([#9](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/9)). |
-| **Amuro.Dev** | Planet info values in the HTML and updates to the JavaScript. |
-| **Mhiz-silver** | **Search bar styling and empty results UI** ([#20](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/20)) and **dark mode with theme persistence** ([#14](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/14)). |
-| **adedejiclinton4-hub** | **Hero and planet structure, plus the planet image section** ([#6](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/6)). |
-| **comfortakor-star** | **Main desktop layout, typography and spacing** ([#8](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/8)). |
-| **ikeoluwapraise** | **Responsive layout and mobile design** ([#10](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/10)). |
+| **Amuro.Dev** ([@Hashi-devs](https://github.com/Hashi-devs)) | Planet info values in the HTML and updates to the JavaScript. |
+| **Mhiz-silver** ([@Mhiz-silver](https://github.com/Mhiz-silver)) | **Search bar styling and empty results UI** ([#20](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/20)) and **dark mode with theme persistence** ([#14](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/14)). |
+| **adedejiclinton4-hub** ([@adedejiclinton4-hub](https://github.com/adedejiclinton4-hub)) | **Hero and planet structure, plus the planet image section** ([#6](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/6)). |
+| **comfortakor-star** ([@comfortakor-star](https://github.com/comfortakor-star)) | **Main desktop layout, typography and spacing** ([#8](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/8)). |
+| **ikeoluwapraise** ([@ikeoluwapraise](https://github.com/ikeoluwapraise)) | **Responsive layout and mobile design** ([#10](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/10)). |
 | **Jesse Ifeanyi** ([@jesseilicious](https://github.com/jesseilicious)) | **API research** for the planet data, together with Stephanie ([#11](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/11)). |
-| **Joyee333** | **Planet data rendering and planet statistics** ([#12](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/12)). |
+| **Joyee333** ([@Joyee333](https://github.com/Joyee333)) | **Planet data rendering and planet statistics** ([#12](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/12)). |
 | **Mhi12:30** ([@mhi1230](https://github.com/mhi1230)) | **Buttons, interactions and planet switching** ([#13](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/13)). |
 | **Stephanie** ([@Stephanie200202](https://github.com/Stephanie200202)) | **API research** for the planet data, together with Jesse ([#11](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/11)). |
 | **telexk1** ([@telexk1](https://github.com/telexk1)) | **README and GitHub rulesets documentation**, together with Joshua ([#15](https://github.com/joshuakimia1008-beep/ts-academy-group-5-capstone/issues/15)). |
@@ -122,6 +128,12 @@ Work was planned as issues on the [project board](https://github.com/users/joshu
 
 - Planetary data from [NASA](https://www.nasa.gov).
 - Interface design by **Amaka N**.
+- Built as part of the **TS Academy** Frontend Development programme.
+
+---
+
+
+Built with ❤️ by **Group 5** · TS Academy Frontend Development Capstone · © 2026
 - Built as part of the **TS Academy** Frontend Development programme.
 
 ---
