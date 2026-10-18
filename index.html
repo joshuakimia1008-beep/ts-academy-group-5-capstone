@@ -3,11 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>planet - Explore the solar system</title>
+    <title>Planet - Explore the Solar System</title>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="assets/style.css" />
   </head>
 
@@ -26,119 +28,171 @@
           id="theme-btn"
           class="theme-toggle"
           aria-label="Toggle dark mode"
+          aria-pressed="false"
         >
-          DARK <img src="assets/moon.svg" alt="Moon icon" class="moon-icon" />
+          <span id="theme-label">DARK</span>
+          <img
+            src="assets/moon.svg"
+            alt=""
+            class="moon-icon"
+          />
         </button>
       </div>
 
-      <nav class="header-nav">
+      <nav class="header-nav" aria-label="Planet search">
         <form id="search-form" class="search-bar">
           <div class="input-group">
-            <img src="assets/search.svg" alt="Search" class="search-icon" />
+            <img
+              src="assets/search.svg"
+              alt=""
+              class="search-icon"
+            />
+
             <input
               type="text"
               id="planet-search"
               placeholder="Search planet name..."
+              autocomplete="off"
+              aria-label="Search for a planet"
+              aria-describedby="search-status"
               required
             />
           </div>
-          <button type="submit" class="search-btn">Search</button>
+
+          <span
+            id="search-status"
+            class="search-status"
+            aria-live="polite"
+          ></span>
+
+          <button type="submit" class="search-btn">
+            Search
+          </button>
         </form>
       </nav>
     </header>
 
     <main>
-      <div class="planet-card">
-        <!-- TASK 2: Planet Image Section -->
+      <!-- Search results / No results message -->
+      <section
+        id="search-results"
+        class="search-results"
+        aria-live="polite"
+        hidden
+      >
+        <div id="no-results" class="no-results" hidden>
+          <h2>No results found!</h2>
+
+          <p>
+            We couldn't find any planet matching your search.
+            Please double-check the name and try again.
+          </p>
+        </div>
+      </section>
+
+      <!-- Selected planet -->
+      <div class="planet-card" id="planet-card">
+        <!-- Planet image -->
         <section id="planet-image">
           <div class="planet-image-container">
             <img
               id="active-planet-img"
               src="assets/earth_ picture.png"
-              alt="Planet image"
+              alt="Earth"
             />
           </div>
         </section>
 
-        <!-- TASK 1: Hero/Planet Structure & Information -->
+        <!-- Planet information -->
         <section id="planetary_structure">
           <div class="planet-details-wrapper">
             <h1 id="planet-name">Earth</h1>
+
             <p class="planet-type">Terrestrial</p>
 
             <p id="planet-description">
-              The only known planet to support life, with liquid water on its
-              surface.
+              Our home planet and the only world currently known
+              to support life.
             </p>
 
-            <div class="planet-info-grid" id="planet-info-container">
+            <div
+              class="planet-info-grid"
+              id="planet-info-container"
+            >
               <div class="info-box">
                 <span class="label">Gravity</span>
-                <span id="planet-gravity" class="value">9.8</span>
+                <span id="planet-gravity" class="value">9.8 m/s²</span>
               </div>
+
               <div class="info-box">
-                <span class="label">Mass (10 24kg)</span>
-                <span id="planet-mass" class="value">0.00315</span>
+                <span class="label">Mass (10²⁴ kg)</span>
+                <span id="planet-mass" class="value">5.97</span>
               </div>
+
               <div class="info-box">
                 <span class="label">Period</span>
-                <span id="planet-period" class="value">365</span>
+                <span id="planet-period" class="value">365.25 days</span>
               </div>
             </div>
 
             <div class="planet-info-values">
               <div class="info-box">
-                <!-- thermometer -->
                 <img
                   src="assets/Temperature icon.png"
-                  alt="Temperature icon"
+                  alt=""
                   class="info-icon"
                 />
-                <span id="planet-temp" class="value">288</span>
+                <span id="planet-temp" class="value">288 K</span>
               </div>
+
               <div class="info-box">
-                <!-- moon -->
                 <img
                   src="assets/Path (2).png"
-                  alt="Path icon"
+                  alt=""
                   class="info-icon"
                 />
-                <span id="planet-orbit" class="value">1</span>
+                <span id="planet-orbit" class="value">1 AU</span>
               </div>
+
               <div class="info-box">
-                <!-- diameter -->
                 <img
                   src="assets/Diameter.png"
-                  alt="Diameter icon"
+                  alt=""
                   class="info-icon"
                 />
-                <span id="planet-diameter" class="value">12756</span>
+                <span id="planet-diameter" class="value">
+                  12,756 km
+                </span>
               </div>
+
               <div class="info-box">
-                <!-- sun -->
                 <img
                   src="assets/Vector (2).png"
-                  alt="Company icon"
+                  alt=""
                   class="info-icon"
                 />
-                <span id="planet-distance" class="value">149.6</span>
+                <span id="planet-distance" class="value">
+                  149.6 million km
+                </span>
               </div>
             </div>
           </div>
         </section>
       </div>
 
-      <!-- PLANETARY FACTS AT A GLANCE (From Figma) -->
+      <!-- Planetary facts table -->
       <section id="planet-facts-section">
         <h2>Planetary Facts at a Glance</h2>
+
         <p class="facts-intro">
-          Below is a comparative table of major planets in our solar system. The
-          data highlights key physical properties used by astronomers and
-          researchers worldwide.
+          Below is a comparative table of major planets in our solar
+          system. The data highlights key physical properties used
+          by astronomers and researchers worldwide.
         </p>
+
         <p class="facts-source">
-          Data about the planets of our solar system (Planetary facts taken from
-          NASA)
+          Data about the planets of our solar system
+          (Planetary facts taken from NASA)
         </p>
 
         <div class="table-responsive">
@@ -147,29 +201,37 @@
               <tr>
                 <th colspan="2"></th>
                 <th>Name</th>
-                <th>Mass (10<sup>24</sup>kg)</th>
+                <th>Mass (10²⁴ kg)</th>
                 <th>Diameter (km)</th>
               </tr>
             </thead>
+
             <tbody>
               <tr>
-                <td class="category-cell" colspan="2" rowspan="4">
+                <td
+                  class="category-cell"
+                  colspan="2"
+                  rowspan="4"
+                >
                   Terrestrial Planets
                 </td>
                 <td>Mercury</td>
                 <td>0.330</td>
                 <td>4,879</td>
               </tr>
+
               <tr>
                 <td>Venus</td>
                 <td>4.87</td>
                 <td>12,104</td>
               </tr>
+
               <tr>
                 <td>Earth</td>
                 <td>5.97</td>
                 <td>12,756</td>
               </tr>
+
               <tr>
                 <td>Mars</td>
                 <td>0.642</td>
@@ -177,23 +239,32 @@
               </tr>
 
               <tr>
-                <td class="category-cell" rowspan="4">Jovian Planets</td>
-                <td class="category-cell" rowspan="2">Gas Giants</td>
+                <td class="category-cell" rowspan="4">
+                  Jovian Planets
+                </td>
+                <td class="category-cell" rowspan="2">
+                  Gas Giants
+                </td>
                 <td>Jupiter</td>
                 <td>1,898</td>
                 <td>142,984</td>
               </tr>
+
               <tr>
                 <td>Saturn</td>
                 <td>568</td>
                 <td>120,536</td>
               </tr>
+
               <tr>
-                <td class="category-cell" rowspan="2">Ice Giants</td>
+                <td class="category-cell" rowspan="2">
+                  Ice Giants
+                </td>
                 <td>Uranus</td>
                 <td>86.8</td>
                 <td>51,118</td>
               </tr>
+
               <tr>
                 <td>Neptune</td>
                 <td>102</td>
@@ -201,7 +272,9 @@
               </tr>
 
               <tr>
-                <td class="category-cell" colspan="2">Dwarf Planets</td>
+                <td class="category-cell" colspan="2">
+                  Dwarf Planets
+                </td>
                 <td>Pluto</td>
                 <td>0.0130</td>
                 <td>2,376</td>
@@ -215,9 +288,9 @@
     <footer>
       <div class="footer-content">
         <p>About</p>
-        <p>first name of group members</p>
+        <p>First names of group members</p>
         <p>Built by GroupName. All rights reserved TSAcademy</p>
-        <p>©2026 Design by Amaka N</p>
+        <p>© 2026 Design by Amaka N</p>
       </div>
     </footer>
 
