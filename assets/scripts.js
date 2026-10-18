@@ -171,16 +171,10 @@ function renderPlanetTable(planetsArray) {
 
   tbody.replaceChildren();
 
-  const categories = [
-    "Terrestrial Planets",
-    "Jovian Planets",
-    "Dwarf Planets",
-  ];
+  const categories = ["Terrestrial Planets", "Jovian Planets", "Dwarf Planets"];
 
   categories.forEach((category) => {
-    const group = planetsArray.filter(
-      (planet) => planet.category === category
-    );
+    const group = planetsArray.filter((planet) => planet.category === category);
 
     group.forEach((planet, index) => {
       const row = document.createElement("tr");
@@ -207,7 +201,7 @@ function renderPlanetTable(planetsArray) {
 
         if (!previous || previous.subCategory !== planet.subCategory) {
           const subGroup = group.filter(
-            (item) => item.subCategory === planet.subCategory
+            (item) => item.subCategory === planet.subCategory,
           );
 
           const subCategoryCell = document.createElement("td");
@@ -233,6 +227,88 @@ function renderPlanetTable(planetsArray) {
   });
 }
 
+/* =========================================================
+   THEME (light / dark)
+   - Saved choice wins; otherwise follow the device setting.
+   - The theme is stored on <html data-theme="...">.
+   ========================================================= */
+const THEME_KEY = "planet-theme";
+const THEME_COLORS = { light: "#f6f8ff", dark: "#141d2f" };
+
+function getSavedTheme() {
+  try {
+    const saved = localStorage.getItem(THEME_KEY);
+    return saved === "dark" || saved === "light" ? saved : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function saveTheme(theme) {
+  try {
+    localStorage.setItem(THEME_KEY, theme);
+  } catch (error) {
+    /* storage blocked (private mode) - theme still works for this visit */
+  }
+}
+
+function getSystemTheme() {
+  return window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+function applyTheme(theme) {
+  const isDark = theme === "dark";
+  const themeButton = document.getElementById("theme-btn");
+  const themeLabel = document.getElementById("theme-label");
+  const metaColor = document.querySelector('meta[name="theme-color"]');
+
+  document.documentElement.setAttribute("data-theme", theme);
+
+  if (metaColor) metaColor.setAttribute("content", THEME_COLORS[theme]);
+  if (themeLabel) themeLabel.textContent = isDark ? "LIGHT" : "DARK";
+  if (themeButton) themeButton.setAttribute("aria-pressed", String(isDark));
+}
+
+function initializeTheme() {
+  const themeButton = document.getElementById("theme-btn");
+
+  // Sync the button with whatever theme the <head> script already applied.
+  applyTheme(
+    document.documentElement.getAttribute("data-theme") ||
+      getSavedTheme() ||
+      getSystemTheme(),
+  );
+
+  if (themeButton) {
+    themeButton.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      applyTheme(next);
+      saveTheme(next);
+    });
+  }
+
+  // Follow device changes, but only if the user hasn't picked a theme.
+  if (window.matchMedia) {
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const onSystemChange = (event) => {
+      if (!getSavedTheme()) applyTheme(event.matches ? "dark" : "light");
+    };
+
+    if (media.addEventListener) {
+      media.addEventListener("change", onSystemChange);
+    } else if (media.addListener) {
+      media.addListener(onSystemChange); // older Safari
+    }
+  }
+}
+
+/* =========================================================
+   PLANET EXPLORER
+   ========================================================= */
 function initializePlanetExplorer() {
   const searchForm = document.getElementById("search-form");
   const searchInput = document.getElementById("planet-search");
@@ -241,8 +317,8 @@ function initializePlanetExplorer() {
   const noResults = document.getElementById("no-results");
   const planetCard = document.getElementById("planet-card");
   const factsSection = document.getElementById("planet-facts-section");
-  const themeButton = document.getElementById("theme-btn");
-  const themeLabel = document.getElementById("theme-label");
+
+  initializeTheme();
 
   // Load Earth and the complete planet table on startup.
   renderActivePlanet(planets.find((planet) => planet.name === "Earth"));
@@ -275,7 +351,7 @@ function initializePlanetExplorer() {
     }
 
     const selectedPlanet = planets.find(
-      (planet) => planet.name.toLowerCase() === query
+      (planet) => planet.name.toLowerCase() === query,
     );
 
     if (selectedPlanet) {
@@ -300,28 +376,6 @@ function initializePlanetExplorer() {
       searchPlanet();
     }
   });
-
-  // Toggle dark and light themes.
-  if (themeButton) {
-    themeButton.addEventListener("click", () => {
-      const isDark = document.body.classList.toggle("dark-mode");
-
-      if (themeLabel) {
-        themeLabel.textContent = isDark ? "LIGHT" : "DARK";
-      } else {
-        // Fallback if the HTML still uses plain text inside the button.
-        const textNode = Array.from(themeButton.childNodes).find(
-          (node) => node.nodeType === Node.TEXT_NODE
-        );
-
-        if (textNode) {
-          textNode.textContent = isDark ? "LIGHT " : "DARK ";
-        }
-      }
-
-      themeButton.setAttribute("aria-pressed", String(isDark));
-    });
-  }
 }
 
 if (document.readyState === "loading") {
