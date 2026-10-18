@@ -3,10 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f6f8ff" />
     <title>Planet - Explore the Solar System</title>
 
+    <!-- Set the theme before first paint so there is no flash of the wrong theme -->
+    <script>
+      (function () {
+        var theme = null;
+        try {
+          theme = localStorage.getItem("planet-theme");
+        } catch (e) {}
+        if (theme !== "dark" && theme !== "light") {
+          theme =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta)
+          meta.setAttribute(
+            "content",
+            theme === "dark" ? "#141d2f" : "#f6f8ff",
+          );
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
 
@@ -27,26 +55,19 @@
         <button
           id="theme-btn"
           class="theme-toggle"
+          type="button"
           aria-label="Toggle dark mode"
           aria-pressed="false"
         >
           <span id="theme-label">DARK</span>
-          <img
-            src="assets/moon.svg"
-            alt=""
-            class="moon-icon"
-          />
+          <img src="assets/moon.svg" alt="" class="moon-icon" />
         </button>
       </div>
 
       <nav class="header-nav" aria-label="Planet search">
-        <form id="search-form" class="search-bar">
+        <form id="search-form" class="search-bar" role="search">
           <div class="input-group">
-            <img
-              src="assets/search.svg"
-              alt=""
-              class="search-icon"
-            />
+            <img src="assets/search.svg" alt="" class="search-icon" />
 
             <input
               type="text"
@@ -65,9 +86,7 @@
             aria-live="polite"
           ></span>
 
-          <button type="submit" class="search-btn">
-            Search
-          </button>
+          <button type="submit" class="search-btn">Search</button>
         </form>
       </nav>
     </header>
@@ -84,8 +103,8 @@
           <h2>No results found!</h2>
 
           <p>
-            We couldn't find any planet matching your search.
-            Please double-check the name and try again.
+            We couldn't find any planet matching your search. Please
+            double-check the name and try again.
           </p>
         </div>
       </section>
@@ -111,14 +130,11 @@
             <p class="planet-type">Terrestrial</p>
 
             <p id="planet-description">
-              Our home planet and the only world currently known
-              to support life.
+              Our home planet and the only world currently known to support
+              life.
             </p>
 
-            <div
-              class="planet-info-grid"
-              id="planet-info-container"
-            >
+            <div class="planet-info-grid" id="planet-info-container">
               <div class="info-box">
                 <span class="label">Gravity</span>
                 <span id="planet-gravity" class="value">9.8 m/s²</span>
@@ -146,34 +162,18 @@
               </div>
 
               <div class="info-box">
-                <img
-                  src="assets/Path (2).png"
-                  alt=""
-                  class="info-icon"
-                />
+                <img src="assets/Path (2).png" alt="" class="info-icon" />
                 <span id="planet-orbit" class="value">1 AU</span>
               </div>
 
               <div class="info-box">
-                <img
-                  src="assets/Diameter.png"
-                  alt=""
-                  class="info-icon"
-                />
-                <span id="planet-diameter" class="value">
-                  12,756 km
-                </span>
+                <img src="assets/Diameter.png" alt="" class="info-icon" />
+                <span id="planet-diameter" class="value">12,756 km</span>
               </div>
 
               <div class="info-box">
-                <img
-                  src="assets/Vector (2).png"
-                  alt=""
-                  class="info-icon"
-                />
-                <span id="planet-distance" class="value">
-                  149.6 million km
-                </span>
+                <img src="assets/Vector (2).png" alt="" class="info-icon" />
+                <span id="planet-distance" class="value">149.6 million km</span>
               </div>
             </div>
           </div>
@@ -185,17 +185,22 @@
         <h2>Planetary Facts at a Glance</h2>
 
         <p class="facts-intro">
-          Below is a comparative table of major planets in our solar
-          system. The data highlights key physical properties used
-          by astronomers and researchers worldwide.
+          Below is a comparative table of major planets in our solar system. The
+          data highlights key physical properties used by astronomers and
+          researchers worldwide.
         </p>
 
         <p class="facts-source">
-          Data about the planets of our solar system
-          (Planetary facts taken from NASA)
+          Data about the planets of our solar system (Planetary facts taken from
+          NASA)
         </p>
 
-        <div class="table-responsive">
+        <div
+          class="table-responsive"
+          tabindex="0"
+          role="region"
+          aria-label="Planetary facts table"
+        >
           <table class="planet-facts-table">
             <thead>
               <tr>
@@ -208,73 +213,53 @@
 
             <tbody>
               <tr>
-                <td
-                  class="category-cell"
-                  colspan="2"
-                  rowspan="4"
-                >
+                <td class="category-cell" colspan="2" rowspan="4">
                   Terrestrial Planets
                 </td>
                 <td>Mercury</td>
                 <td>0.330</td>
                 <td>4,879</td>
               </tr>
-
               <tr>
                 <td>Venus</td>
                 <td>4.87</td>
                 <td>12,104</td>
               </tr>
-
               <tr>
                 <td>Earth</td>
                 <td>5.97</td>
                 <td>12,756</td>
               </tr>
-
               <tr>
                 <td>Mars</td>
                 <td>0.642</td>
                 <td>6,792</td>
               </tr>
-
               <tr>
-                <td class="category-cell" rowspan="4">
-                  Jovian Planets
-                </td>
-                <td class="category-cell" rowspan="2">
-                  Gas Giants
-                </td>
+                <td class="category-cell" rowspan="4">Jovian Planets</td>
+                <td class="category-cell" rowspan="2">Gas Giants</td>
                 <td>Jupiter</td>
                 <td>1,898</td>
                 <td>142,984</td>
               </tr>
-
               <tr>
                 <td>Saturn</td>
                 <td>568</td>
                 <td>120,536</td>
               </tr>
-
               <tr>
-                <td class="category-cell" rowspan="2">
-                  Ice Giants
-                </td>
+                <td class="category-cell" rowspan="2">Ice Giants</td>
                 <td>Uranus</td>
                 <td>86.8</td>
                 <td>51,118</td>
               </tr>
-
               <tr>
                 <td>Neptune</td>
                 <td>102</td>
                 <td>49,528</td>
               </tr>
-
               <tr>
-                <td class="category-cell" colspan="2">
-                  Dwarf Planets
-                </td>
+                <td class="category-cell" colspan="2">Dwarf Planets</td>
                 <td>Pluto</td>
                 <td>0.0130</td>
                 <td>2,376</td>
