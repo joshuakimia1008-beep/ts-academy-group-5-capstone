@@ -133,7 +133,7 @@ img {
 main,
 footer {
   width: 100%;
-  max-width: var(--content-max);
+  max-width: calc(var(--content-max) + 2 * var(--gutter));
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
@@ -505,6 +505,32 @@ main {
   }
 }
 
+/* Figma sizes for larger screens */
+@media (min-width: 768px) {
+  /* Profile section: 730 wide, 420 tall, gap 32, radius 16, padding 48 */
+  .planet-card {
+    min-height: 420px;
+    gap: 32px;
+    padding: 48px;
+    border-radius: 16px;
+    opacity: 1;
+  }
+
+  /* Stats section: up to 480 x 85, radius 10, padding 16 32 */
+  .planet-info-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 480px;
+    min-height: 85px;
+    padding: 16px 32px;
+    border-radius: 10px;
+    opacity: 1;
+  }
+}
+
 /* =========================================================
    FACTS SECTION + TABLE
    ========================================================= */
@@ -665,9 +691,11 @@ footer a:hover {
    ========================================================= */
 @media (min-width: 640px) {
   .search-bar {
-    min-height: 69px;
+    height: 69px;
+    justify-content: space-between;
     gap: 12px;
-    padding: 0 11px 0 22px;
+    padding: 8px 12px 8px 24px;
+    border-radius: 16px;
   }
 
   .search-icon {
