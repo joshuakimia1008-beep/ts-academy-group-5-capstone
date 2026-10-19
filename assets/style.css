@@ -28,14 +28,14 @@
 
   /* Table */
   --table-bg: #f2f7ff;
-  --table-wrap-bg: #d1e3ff;
+  --table-wrap-bg: #f2f7ff;
   --table-text: #0b1220;
   --table-border: #ffffff;
   --table-outer: #ffffff;
   --table-head-bg: #141d2f;
   --table-head-text: #ffffff;
   --table-head-border: #ffffff;
-  --table-cat-bg: #90a4d4;
+  --table-cat-bg: #d1e3ff;
   --table-cat-text: #0b1220;
 
   /* Images. The four stat icons are white PNGs, so they are flipped
@@ -70,16 +70,16 @@
 
   --placeholder: #8fa0c8;
 
-  --table-bg: #17223c;
-  --table-wrap-bg: #17223c;
-  --table-text: #e8eeff;
-  --table-border: #33466f;
-  --table-outer: #33466f;
+  --table-bg: #f2f7ff;
+  --table-wrap-bg: #f2f7ff;
+  --table-text: #0b1220;
+  --table-border: #ffffff;
+  --table-outer: #ffffff;
   --table-head-bg: #0b1220;
   --table-head-text: #ffffff;
   --table-head-border: #33466f;
-  --table-cat-bg: #2c3f6e;
-  --table-cat-text: #ffffff;
+  --table-cat-bg: #90a4d4;
+  --table-cat-text: #0b1220;
 
   --logo-filter: invert(1);
   --stat-icon-filter: none;
