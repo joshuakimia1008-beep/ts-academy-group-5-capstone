@@ -535,12 +535,19 @@ main {
    PHONE LAYOUT (under 640px)
    ========================================================= */
 @media (max-width: 639px) {
+  /* Page edges: 16px, so a 375px phone gives 343px content width */
+  :root {
+    --gutter: 16px;
+  }
+
   /* Profile card: small image beside name + type, details below */
   .planet-card {
-    grid-template-columns: 72px minmax(0, 1fr);
+    /* 343 card, 24 padding = 295 content; profile row 70 tall, gap 20 */
+    grid-template-columns: 70px minmax(0, 1fr);
     grid-template-rows: auto auto;
-    column-gap: 16px;
+    column-gap: 20px;
     row-gap: 0;
+    padding: 24px;
     align-items: start;
   }
 
@@ -555,7 +562,7 @@ main {
   }
 
   .planet-image-container {
-    width: 72px;
+    width: 70px;
     margin: 0;
   }
 
@@ -581,7 +588,7 @@ main {
 
   #planet-description {
     grid-column: 1 / -1;
-    margin: 20px 0;
+    margin: 24px 0;
   }
 
   /* Stats panel: one stat per line */
@@ -614,8 +621,8 @@ main {
   .planet-info-values {
     grid-column: 1 / -1;
     grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-    padding-inline: 4px;
+    gap: 16px;
+    padding-inline: 0;
   }
 
   .planet-info-values .value {
@@ -625,6 +632,11 @@ main {
   .info-icon {
     width: 24px;
     height: 24px;
+  }
+
+  /* Footer: items 20px apart */
+  .footer-content {
+    gap: 20px;
   }
 
   /* Table: category column + Name + Diameter (Mass is hidden) */
