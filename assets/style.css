@@ -576,12 +576,18 @@ main {
   vertical-align: middle;
 }
 
-/* Phones: show only Name and Diameter (hide the Mass column).
-   Mass is always the second-to-last cell in every row. */
+/* Phones: show only Name and Mass.
+   Hides the empty header cell, the category cells and the Diameter column. */
 @media (max-width: 639px) {
-  .planet-facts-table thead th:nth-last-child(2),
-  .planet-facts-table tbody td:nth-last-child(2) {
+  .planet-facts-table thead th:first-child,
+  .planet-facts-table .category-cell,
+  .planet-facts-table thead th:last-child,
+  .planet-facts-table tbody td:last-child {
     display: none;
+  }
+
+  .planet-facts-table {
+    min-width: 0;
   }
 }
 
