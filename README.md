@@ -135,6 +135,3 @@ Built with ❤️ by **Group 5** · TS Academy Frontend Development Capstone · 
 - Built as part of the **TS Academy** Frontend Development programme.
 
 ---
-
-
-Built with ❤️ by **Group 5** · TS Academy Frontend Development Capstone · © 2026
